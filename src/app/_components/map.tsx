@@ -5,22 +5,27 @@ const Map: React.FC = () => {
 
     /*
     マップ概要
-    1 = 壁
     0 = 移動可能範囲
+    1 = 壁
+    2 = ベッド
+    3 = 暖炉
+    4 = 本棚
+    5 = テーブル
+    6 = ゲスト
     */
     const viewMap = [
         [1, 1, 1, 1, 1, 1, 1],
+        [1, 4, 0, 3, 0, 2, 1],
         [1, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 5, 6, 0, 1],
         [1, 0, 0, 0, 0, 0, 1],
         [1, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1],
     ]
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [userX,setX] = useState(1);
-    const [userY,setY] = useState(1);
+    const [userX,setX] = useState(2);
+    const [userY,setY] = useState(3);
 
     useEffect(() => {
         // 排他
@@ -42,6 +47,11 @@ const Map: React.FC = () => {
         const wallImage = new Image();
         const floorImage = new Image();
         const userImage = new Image();
+        const bedImage = new Image();
+        const danroImage = new Image();
+        const shelfImage = new Image();
+        const tableImage = new Image();
+        const guestImage = new Image();
         let loadedImages = 0;
 
         const drawMap = () => {
@@ -55,12 +65,23 @@ const Map: React.FC = () => {
                 }
             }
 
+            // ユーザー描画
             ctx.drawImage(userImage, 0, 0, 32, 32, 32*userX, 32*userY, 32, 32);
+            // ベッド描画
+            ctx.drawImage(bedImage, 0, 0, 32, 32, 32 * 5 + 7, 32 * 1, 32, 32);
+            // 暖炉描画
+            ctx.drawImage(danroImage, 0, 0, 32, 32, 32 * 3, 32 * 1, 32, 32);
+            // 本棚描画
+            ctx.drawImage(shelfImage, 0, 0, 32, 32, 32 * 1, 32 * 1, 32, 32);
+            // テーブル描画
+            ctx.drawImage(tableImage, 0, 0, 32, 32, 32 * 3, 32 * 3, 32, 32);
+            // ゲスト描画
+            ctx.drawImage(guestImage, 0, 0, 32, 32, 32 * 4 + 4, 32 * 3, 32, 32);
         };
 
         const onImageLoad = () => {
             loadedImages++;
-            if (loadedImages === 3) {
+            if (loadedImages === 7) {
                 drawMap();
             }
         };
@@ -68,10 +89,20 @@ const Map: React.FC = () => {
         wallImage.onload = onImageLoad;
         floorImage.onload = onImageLoad;
         userImage.onload = onImageLoad;
+        bedImage.onload = onImageLoad;
+        danroImage.onload = onImageLoad;
+        shelfImage.onload = onImageLoad;
+        tableImage.onload = onImageLoad;
+        guestImage.onload = onImageLoad;
 
         wallImage.src = "/images/wall.png";
         floorImage.src = "/images/floor.png";
         userImage.src = "/images/user.png";
+        bedImage.src = "/images/bed.png";
+        danroImage.src = "/images/danro.png";
+        shelfImage.src = "/images/shelf.png";
+        tableImage.src = "/images/table.png";
+        guestImage.src = "/images/guest.png";
 
     }, [userX,userY])
 

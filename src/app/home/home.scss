@@ -1,6 +1,14 @@
 .map-wrapper{
     background: #444;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
     .map {
-        margin: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
     }
 }
