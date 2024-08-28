@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import "../home/home.scss"
 
 const Map: React.FC = () => {
 
@@ -116,11 +117,14 @@ const Map: React.FC = () => {
     }, [userX, userY]); // userXとuserYを依存配列に追加
 
     return (
-        <canvas
+        <div className="map-wrapper">
+            <canvas
             ref={canvasRef}
             width={224}
-            height={224}>
-        </canvas>
+            height={224}
+            className="map">
+            </canvas>
+        </div>
     )
 }
 
