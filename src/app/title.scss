@@ -1,0 +1,37 @@
+.bg {    
+    background: #444;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    color: #FFF;
+    .title {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        font-family: "PixelMplus-12R", sans-serif;
+        letter-spacing: 1.3rem;
+        font-size: 32px;
+    }
+    .button {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        font-family: "PixelMplus-12B", sans-serif;
+        padding: 20px 30px;
+        border-radius: 9999px;
+        border: 1px solid #FFF;
+        color: #FFF;
+        text-decoration: none;
+        opacity: 1;
+        transition: all 0.5s;
+        font-size: 20px;
+    }
+    .button:hover {
+        opacity: 0.7;
+    }
+}
