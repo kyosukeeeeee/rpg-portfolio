@@ -1,4 +1,4 @@
-import "../title.scss"
+import "./style/title.scss"
 
 const Title: React.FC<{ text: string }> = ({text}) => {
     return (

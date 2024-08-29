@@ -1,0 +1,21 @@
+.status-list {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+
+    background: #444;
+    border: solid #FFF 2px;
+    padding: 20px 50px;
+    list-style-type: none;
+    .status-item {
+        color: #FFF;
+        font-family: "PixelMplus-12R", sans-serif;
+        margin: 15px 0;
+        opacity: 1;
+        transition: all 0.5s;
+    }
+    .status-item:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}

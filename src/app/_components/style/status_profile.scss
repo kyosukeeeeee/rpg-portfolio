@@ -1,0 +1,17 @@
+.profile-list {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+
+    background: #444;
+    color: #FFF;
+    font-family: "PixelMplus-12R", sans-serif;
+    border: 2px solid #444;
+    padding: 20px 50px;
+    .profile-item {
+        margin: 15px 0;
+    }
+}

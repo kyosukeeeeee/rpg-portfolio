@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import "../home/home.scss"
+
+import Status from "./status";
+import "./style/home.scss"
 
 const Map: React.FC = () => {
 
@@ -26,6 +28,8 @@ const Map: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [userX,setX] = useState(2);
     const [userY,setY] = useState(3);
+    const [toggle, setToggle] = useState(false);
+    const [active, setActive] = useState(true);
 
     useEffect(() => {
         // 排他
@@ -81,7 +85,7 @@ const Map: React.FC = () => {
 
         const onImageLoad = () => {
             loadedImages++;
-            if (loadedImages === 7) {
+            if (loadedImages === 8) {
                 drawMap();
             }
         };
@@ -104,6 +108,8 @@ const Map: React.FC = () => {
         tableImage.src = "/images/table.png";
         guestImage.src = "/images/guest.png";
 
+        setActive(true);
+
     }, [userX,userY])
 
     // 移動判定
@@ -116,6 +122,8 @@ const Map: React.FC = () => {
     // キーダウンイベント
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            if(!active) return;
+
             switch (event.key) {
                 case 'ArrowUp':
                     if(moveRestrict(0, -1)) {
@@ -137,6 +145,11 @@ const Map: React.FC = () => {
                         setX(prev => prev + 1);
                     }
                     break;
+                case 'Tab':
+                    event.preventDefault();
+                    setToggle(prev => !prev);
+                    setActive(false);
+                    break;
             }
         };
 
@@ -148,14 +161,17 @@ const Map: React.FC = () => {
     }, [userX, userY]); // userXとuserYを依存配列に追加
 
     return (
-        <div className="map-wrapper">
-            <canvas
-            ref={canvasRef}
-            width={224}
-            height={224}
-            className="map">
-            </canvas>
-        </div>
+        <>
+            <div className="map-wrapper">
+                <canvas
+                ref={canvasRef}
+                width={224}
+                height={224}
+                className="map">
+                </canvas>
+            </div>
+            <Status visible={toggle} setVisible={setToggle} />
+        </>
     )
 }
 
