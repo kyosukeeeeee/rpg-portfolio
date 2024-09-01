@@ -1,11 +1,18 @@
-const StatusProfile: React.FC = () => {
+import "./style/status.scss";
+
+type StatusProps = {
+    visible: boolean;
+    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const StatusProfile: React.FC<StatusProps> = ({visible, setVisible}) => {
     return (
-        <div className="profile-list">
-            <p className="profile-item"><span>名前</span>高田 恭佑</p>
-            <p className="profile-item"><span>Lv</span>28</p>
-            <p className="profile-item"><span>ジョブ</span>Webエンジニア</p>
-            <p className="profile-item"><span>趣味</span>ゲーム・映画</p>
-        </div>
+        <ul className="status-list" style={{ display: visible ? "block" : "none" }}>
+            <li className="status-item"><span>名前</span>高田 恭佑</li>
+            <li className="status-item"><span>Lv</span>28</li>
+            <li className="status-item"><span>ジョブ</span>Webエンジニア</li>
+            <li className="status-item"><span>趣味</span>ゲーム・映画</li>
+        </ul>
     )
 }
 

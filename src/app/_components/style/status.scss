@@ -1,7 +1,8 @@
 .status-list {
     position: absolute;
-    top: 10%;
-    right: 10%;
+    top: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
 
     background: #444;
     border: solid #FFF 2px;

@@ -1,8 +1,10 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
+import StatusProfile from "./status_profile";
+import StatusSkill from "./status_skill";
+import StatusQualification from "./status_qualification";
 import "./style/status.scss";
 
-// typeとinterfaceの違いについて調べる
 type StatusProps = {
     visible: boolean;
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +13,9 @@ type StatusProps = {
 const Status: React.FC<StatusProps> = ({ visible, setVisible }) => {
 
     const [selectItem, setSelectItem] = useState(1);
+    const [profilePanel, setProfilePanel] = useState(false);
+    const [skillPanel, setSkillPanel] = useState(false);
+    const [qualificationPanel, setQualificationPanel] = useState(false);
 
     const STATUS_LIST = [
         { id: 1, text: "つよさ"},
@@ -30,10 +35,13 @@ const Status: React.FC<StatusProps> = ({ visible, setVisible }) => {
             case 'Enter':
                 switch (selectItem){
                     case 1:
+                        setProfilePanel(true);
                         break;
                     case 2:
+                        setSkillPanel(true);
                         break;
                     case 3:
+                        setQualificationPanel(true);
                         break;
                     case 4:
                         setVisible(false);
@@ -57,10 +65,15 @@ const Status: React.FC<StatusProps> = ({ visible, setVisible }) => {
             {
                 STATUS_LIST.map((item) => {
                     return (
-                        <li key={item.id} className="status-item">
-                            {selectItem === item.id && "> "}
-                            {item.text}
-                        </li>
+                        <>
+                            <li key={item.id} className="status-item">
+                                {selectItem === item.id && "> "}
+                                {item.text}
+                            </li>
+                            <StatusProfile visible={profilePanel} setVisible={setProfilePanel} />
+                            <StatusSkill visible={skillPanel} setVisible={setSkillPanel} />
+                            <StatusQualification visible={qualificationPanel} setVisible={setQualificationPanel} />
+                        </>
                     )
                 })
             }

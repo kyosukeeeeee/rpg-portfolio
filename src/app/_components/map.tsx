@@ -148,7 +148,7 @@ const Map: React.FC = () => {
                 case 'Tab':
                     event.preventDefault();
                     setToggle(prev => !prev);
-                    setActive(false);
+                    // setActive(false);
                     break;
             }
         };
