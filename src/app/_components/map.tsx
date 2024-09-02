@@ -28,8 +28,8 @@ const Map: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [userX,setX] = useState(2);
     const [userY,setY] = useState(3);
-    const [toggle, setToggle] = useState(false);
-    const [active, setActive] = useState(true);
+    const [statusPanel, setStatusPanel] = useState(false);
+    const [activeMap, setActiveMap] = useState(true);
 
     useEffect(() => {
         // 排他
@@ -102,13 +102,11 @@ const Map: React.FC = () => {
         wallImage.src = "/images/wall.png";
         floorImage.src = "/images/floor.png";
         userImage.src = "/images/user.png";
-        bedImage.src = "/images/bed.png";
+        bedImage.src = "/images/bed.svg";
         danroImage.src = "/images/danro.png";
         shelfImage.src = "/images/shelf.png";
         tableImage.src = "/images/table.png";
         guestImage.src = "/images/guest.png";
-
-        setActive(true);
 
     }, [userX,userY])
 
@@ -119,58 +117,62 @@ const Map: React.FC = () => {
         return viewMap[newY][newX] === 0;
     }
 
+    // ハンドルイベント
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if(activeMap === false) return;
+
+        switch (event.key) {
+            case 'ArrowUp':
+                if(moveRestrict(0, -1)) {
+                    setY(prev => prev - 1);
+                }
+                break;
+            case 'ArrowDown':
+                if(moveRestrict(0, 1)) {
+                    setY(prev => prev + 1);
+                }
+                break;
+            case 'ArrowLeft':
+                if(moveRestrict(-1, 0)) {
+                    setX(prev => prev - 1);
+                }
+                break;
+            case 'ArrowRight':
+                if(moveRestrict(1, 0)) {
+                    setX(prev => prev + 1);
+                }
+                break;
+            case 'Tab':
+                event.preventDefault();
+                setStatusPanel(prev => !prev);
+                setActiveMap(false);
+                break;
+        }
+    };
+
     // キーダウンイベント
     useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if(!active) return;
-
-            switch (event.key) {
-                case 'ArrowUp':
-                    if(moveRestrict(0, -1)) {
-                        setY(prev => prev - 1);
-                    }
-                    break;
-                case 'ArrowDown':
-                    if(moveRestrict(0, 1)) {
-                        setY(prev => prev + 1);
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if(moveRestrict(-1, 0)) {
-                        setX(prev => prev - 1);
-                    }
-                    break;
-                case 'ArrowRight':
-                    if(moveRestrict(1, 0)) {
-                        setX(prev => prev + 1);
-                    }
-                    break;
-                case 'Tab':
-                    event.preventDefault();
-                    setToggle(prev => !prev);
-                    // setActive(false);
-                    break;
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleKeyDown);
 
         return () => {
-            window.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [userX, userY]); // userXとuserYを依存配列に追加
+    }, [userX, userY, activeMap]); // userXとuserYを依存配列に追加
 
     return (
         <>
             <div className="map-wrapper">
                 <canvas
-                ref={canvasRef}
-                width={224}
-                height={224}
-                className="map">
+                    ref={canvasRef}
+                    width={224}
+                    height={224}
+                    className="map">
                 </canvas>
             </div>
-            <Status visible={toggle} setVisible={setToggle} />
+            <Status 
+                visible={statusPanel}
+                setVisible={setStatusPanel} 
+                setActiveMap={setActiveMap} />
         </>
     )
 }

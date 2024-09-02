@@ -1,17 +1,17 @@
 import "./style/status.scss";
 
 type StatusProps = {
-    visible: boolean;
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    visibleQualification: boolean;
+    setVisibleQualification: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const StatusQualification: React.FC<StatusProps> = ({visible, setVisible}) => {
+const StatusQualification: React.FC<StatusProps> = ({visibleQualification, setVisibleQualification}) => {
     return (
-        <ul className="status-list" style={{ display: visible ? "block" : "none" }}>
-            <li className="status-item">AWS Certified Solutions Architect - Associate</li>
-            <li className="status-item">AWS Certified Cloud Practitioner</li>
-            <li className="status-item">HTML プロフェッショナル Level1</li>
-            <li className="status-item">ITパスポート</li>
+        <ul className="qualification-list" style={{ display: visibleQualification ? "block" : "none" }}>
+            <li className="item">AWS Certified Solutions Architect - Associate</li>
+            <li className="item">AWS Certified Cloud Practitioner</li>
+            <li className="item">HTML プロフェッショナル Level1</li>
+            <li className="item">ITパスポート</li>
         </ul>
     )
 }
