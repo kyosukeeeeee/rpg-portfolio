@@ -1,13 +1,27 @@
+import { Typewriter } from 'react-simple-typewriter';
+
 import "./style/text_box.scss"
 
 type textContent = {
-    text: string
+    text: string,
+    setText: React.Dispatch<React.SetStateAction<string>>
 }
 
-const TextBox: React.FC<textContent> = ({text}) => {
+const TextBox: React.FC<textContent> = ({text, setText}) => {
     return (
         <div className="text-box">
-            <p className="text-content">{text}</p>
+            <Typewriter
+                words={[text]}
+                loop={1}
+                cursor
+                cursorStyle='_'
+                typeSpeed={70}
+                onLoopDone={
+                    () => {
+                        setText("")
+                    }
+                }
+            />
         </div>
     )
 }
