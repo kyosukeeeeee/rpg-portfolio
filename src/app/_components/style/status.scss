@@ -39,7 +39,7 @@
 
     background: #444;
     border: solid #FFF 2px;
-    padding: 20px 50px;
+    padding: 20px 50px 50px;
     list-style-type: none;
 
     width: auto;
@@ -52,7 +52,8 @@
         transition: all 0.5s;
     }
     .item span {
-        width: 100px;
+        display: inline-block;
+        width: 80px;
         margin-right: 15px;
     }
 }
@@ -89,6 +90,8 @@
         }
     }
     .skill-list {
+        position: relative;
+        height: 300px;
         .item {
             color: #FFF;
             font-family: "PixelMplus-12R", sans-serif;
@@ -118,7 +121,7 @@
 
     background: #444;
     border: solid #FFF 2px;
-    padding: 20px 50px;
+    padding: 20px 50px 50px;
     list-style-type: none;
 
     width: auto;
@@ -130,4 +133,23 @@
         opacity: 1;
         transition: all 0.5s;
     }
+}
+
+// 共通部品
+.btn {
+    width: 150px;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: #FFF;
+    font-family: "PixelMplus-12R", sans-serif;
+    letter-spacing: 1px;
+    opacity: 1;
+    transition: 0.5s all;
+}
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.6;
 }

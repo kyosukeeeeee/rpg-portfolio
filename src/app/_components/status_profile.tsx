@@ -10,29 +10,34 @@ type StatusProps = {
 const StatusProfile: React.FC<StatusProps> = ({visibleProfile, setVisibleProfile}) => {
     const [activeProfile, setActiveProfile] = useState(false);
 
-    // ハンドルイベント
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if(activeProfile === false) {
-            return;
-        }
-
-        switch (event.key) {
-            case 'Enter':
-                setVisibleProfile(false);
-                setActiveProfile(false);
-
-                break;
-            default:
-                break;
-        }
-    };
+    const closePanel = () => {
+        setVisibleProfile(false);
+    }
 
     useEffect(() => {
         setActiveProfile(true);
 
+        // ハンドルイベント
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if(activeProfile === false) {
+                return;
+            }
+
+            switch (event.key) {
+                case 'Enter':
+                    setVisibleProfile(false);
+                    setActiveProfile(false);
+
+                    break;
+                default:
+                    break;
+            }
+        };
+
         document.addEventListener("keydown", handleKeyDown);
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
+            setActiveProfile(false)
         };
     }, [activeProfile]);
 
@@ -42,6 +47,7 @@ const StatusProfile: React.FC<StatusProps> = ({visibleProfile, setVisibleProfile
             <li className="item"><span>Lv：</span>28</li>
             <li className="item"><span>ジョブ：</span>Webエンジニア</li>
             <li className="item"><span>趣味：</span>ゲーム・映画</li>
+            <p className="btn" onClick={closePanel}>Enterで閉じる</p>
         </ul>
     )
 }

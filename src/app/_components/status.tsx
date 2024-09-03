@@ -18,7 +18,7 @@ const Status: React.FC<StatusProps> = ({ visible, setVisible, setActiveMap }) =>
     const [profilePanel, setProfilePanel] = useState(false);
     const [skillPanel, setSkillPanel] = useState(false);
     const [qualificationPanel, setQualificationPanel] = useState(false);
-    const [activeStatus, setActiveStatus] = useState(true);
+    const [activeStatus, setActiveStatus] = useState(false);
 
     const STATUS_LIST = [
         { id: 1, text: "つよさ"},
@@ -27,56 +27,55 @@ const Status: React.FC<StatusProps> = ({ visible, setVisible, setActiveMap }) =>
         { id: 4, text: "とじる"},
     ]
 
-    // ハンドルイベント
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if(activeStatus === false) {
-            return;
-        }
-
-        switch (event.key) {
-            case 'ArrowUp':
-                setSelectItem(prev => prev > 1 ? prev -1 : prev);
-                break;
-            case 'ArrowDown':
-                setSelectItem(prev => prev < 4 ? prev + 1 : prev);
-                break;
-            case 'Enter':
-                switch (selectItem){
-                    case 1:
-                        setVisible(false);
-                        setProfilePanel(true);
-
-                        break;
-                    case 2:
-                        setVisible(false);
-                        setSkillPanel(true);
-                        
-                        break;
-                    case 3:
-                        setVisible(false);
-                        setQualificationPanel(true);
-                        setVisible(false);
-                        break;
-                    case 4:
-                        setVisible(false);
-                        setActiveStatus(false);
-                        setActiveMap(true);
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
-    };
-
     useEffect(() => {
-        setActiveStatus(true);
+        setActiveStatus(true)
 
+        // ハンドルイベント
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if(activeStatus === false) return;
+
+            switch (event.key) {
+                case 'ArrowUp':
+                    setSelectItem(prev => prev > 1 ? prev -1 : prev);
+                    break;
+                case 'ArrowDown':
+                    setSelectItem(prev => prev < 4 ? prev + 1 : prev);
+                    break;
+                case 'Enter':
+                    switch (selectItem){
+                        case 1:
+                            setVisible(false);
+                            setProfilePanel(true);
+
+                            break;
+                        case 2:
+                            setVisible(false);
+                            setSkillPanel(true);
+                            
+                            break;
+                        case 3:
+                            setVisible(false);
+                            setQualificationPanel(true);
+                            setVisible(false);
+                            break;
+                        case 4:
+                            setVisible(false);
+                            setActiveStatus(false);
+                            setActiveMap(true);
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        };
         document.addEventListener("keydown", handleKeyDown);
+
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
+            setActiveStatus(false)
         };
-    }, [selectItem, activeStatus]);
+    }, [activeStatus, selectItem]);
 
     return (
         <>

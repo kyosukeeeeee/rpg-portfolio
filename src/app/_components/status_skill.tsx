@@ -11,10 +11,42 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
 
     const CATEGORY = ["フロントエンド", "バックエンド", "データベース", "その他"];
     const [activeIndex, setActiveIndex] = useState(0);
+    const [activeSkill, setActiveSkill] = useState(false);
 
     const handleNavClick = (index: number) => {
         setActiveIndex(index);
     }
+
+    const closePanel = () => {
+        setVisibleSkill(false);
+    }
+
+    useEffect(() => {
+        setActiveSkill(true);
+
+        // ハンドルイベント
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if(activeSkill === false) {
+                return;
+            }
+
+            switch (event.key) {
+                case 'Enter':
+                    setVisibleSkill(false);
+                    setActiveSkill(false);
+
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+            setActiveSkill(false)
+        };
+    }, [activeSkill]);
 
     return (
         <div className="skill-content" style={{ display: visibleSkill ? "block" : "none" }}>
@@ -41,6 +73,7 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
                 <li className="item">Next.js</li>
                 <li className="item">SCSS</li>
                 <li className="item">BootStrap</li>
+                <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* バックエンド */}
             <ul className={`skill-list ${activeIndex === 1 ? "show" : "hide"}`}>
@@ -50,6 +83,7 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
                 <li className="item">PHP</li>
                 <li className="item">SpringBoot</li>
                 <li className="item">GoogleAppScript</li>
+                <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* データベース */}
             <ul className={`skill-list ${activeIndex === 2 ? "show" : "hide"}`}>
@@ -57,6 +91,7 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
                 <li className="item">PostgreSQL</li>
                 <li className="item">SQL server</li>
                 <li className="item">RDS</li>
+                <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* その他 */}
             <ul className={`skill-list ${activeIndex === 3 ? "show" : "hide"}`}>
@@ -64,6 +99,7 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
                 <li className="item">Node.js</li>
                 <li className="item">Linux</li>
                 <li className="item">Word Press</li>
+                <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
         </div>
     )
