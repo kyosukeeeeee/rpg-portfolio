@@ -18,82 +18,96 @@ const Status: React.FC<StatusProps> = ({ visible, setVisible, setActiveMap }) =>
     const [profilePanel, setProfilePanel] = useState(false);
     const [skillPanel, setSkillPanel] = useState(false);
     const [qualificationPanel, setQualificationPanel] = useState(false);
-    const [activeStatus, setActiveStatus] = useState(false);
+    // const [activeStatus, setActiveStatus] = useState(false);
 
-    const STATUS_LIST = [
-        { id: 1, text: "つよさ"},
-        { id: 2, text: "スキル"},
-        { id: 3, text: "しかく"},
-        { id: 4, text: "とじる"},
-    ]
+    const STATUS_LIST = ["つよさ", "スキル", "しかく", "とじる"];
+
+    const selctTab = (index: number) => {
+        switch(index) {
+            case 1:
+                setProfilePanel(prev => !prev)
+                break
+            case 2:
+                setSkillPanel(prev => !prev)
+                break
+            case 3:
+                setQualificationPanel(prev => !prev)
+                break
+            case 4:
+                setVisible(false)
+                setActiveMap(prev => !prev)
+                break
+        }
+    }
 
     useEffect(() => {
-        setActiveStatus(true)
 
         // ハンドルイベント
         const handleKeyDown = (event: KeyboardEvent) => {
-            if(activeStatus === false) return;
-
+            if(profilePanel || skillPanel || qualificationPanel) return;
             switch (event.key) {
                 case 'ArrowUp':
-                    setSelectItem(prev => prev > 1 ? prev -1 : prev);
+                    setSelectItem(prev => prev > 1 ? prev -1 : prev)
                     break;
                 case 'ArrowDown':
-                    setSelectItem(prev => prev < 4 ? prev + 1 : prev);
+                    setSelectItem(prev => prev < 4 ? prev + 1 : prev)
                     break;
                 case 'Enter':
                     switch (selectItem){
                         case 1:
-                            setVisible(false);
-                            setProfilePanel(true);
-
-                            break;
+                            setProfilePanel(prev => !prev)
+                            break
                         case 2:
-                            setVisible(false);
-                            setSkillPanel(true);
-                            
-                            break;
+                            setSkillPanel(prev => !prev)
+                            break
                         case 3:
-                            setVisible(false);
-                            setQualificationPanel(true);
-                            setVisible(false);
-                            break;
+                            setQualificationPanel(prev => !prev)
+                            break
                         case 4:
-                            setVisible(false);
-                            setActiveStatus(false);
-                            setActiveMap(true);
-                            break;
+                            setVisible(false)
+                            setActiveMap(prev => !prev)
+                            break
                     }
-                    break;
+                    break
                 default:
-                    break;
+                    break
             }
         };
-        document.addEventListener("keydown", handleKeyDown);
+        
+        if (visible) {
+            document.addEventListener('keydown', handleKeyDown);
+        } else {
+            document.removeEventListener('keydown', handleKeyDown);
+        }
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
-            setActiveStatus(false)
         };
-    }, [activeStatus, selectItem]);
+    }, [selectItem]);
 
     return (
         <>
             <ul className="status-list" style={{ display: visible ? "block" : "none" }}>
                 {
-                    STATUS_LIST.map((item) => {
+                    STATUS_LIST.map((item,index) => {
                         return (
-                            <li key={item.id} className="status-item">
-                                {selectItem === item.id && "> "}
-                                {item.text}
+                            <li key={index + 1} className="status-item" onClick={() => selctTab(index + 1)}>
+                                {selectItem === index + 1 && "> "}
+                                {item}
                             </li>
                         )
                     })
                 }
             </ul>
-            <StatusProfile visibleProfile={profilePanel} setVisibleProfile={setProfilePanel} />
-            <StatusSkill visibleSkill={skillPanel} setVisibleSkill={setSkillPanel} />
-            <StatusQualification visibleQualification={qualificationPanel} setVisibleQualification={setQualificationPanel} />
+            {profilePanel && (
+                <StatusProfile visibleProfile={profilePanel} setVisibleProfile={setProfilePanel} />
+            )}
+            {skillPanel && (
+                <StatusSkill visibleSkill={skillPanel} setVisibleSkill={setSkillPanel} />
+            )}
+            {qualificationPanel && (
+                <StatusQualification visibleQualification={qualificationPanel} setVisibleQualification={setQualificationPanel} />
+            )}
         </>
     )
 }

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
 import Status from "./status";
+import TextBox from "./text_box";
 import "./style/home.scss"
 
 const Map: React.FC = () => {
@@ -102,7 +103,6 @@ const Map: React.FC = () => {
     }
 
     useEffect(() => {
-        setActiveMap(true)
         const handleKeyDown = (event: KeyboardEvent) => {
             if(activeMap === false) return;
     
@@ -134,7 +134,14 @@ const Map: React.FC = () => {
                     break;
             }
         };
-        document.addEventListener('keydown', handleKeyDown);
+        
+        if (activeMap) {
+            setActiveMap(true);
+            document.addEventListener('keydown', handleKeyDown);
+        } else {
+            setActiveMap(false);
+            document.removeEventListener('keydown', handleKeyDown);
+        }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
@@ -152,10 +159,14 @@ const Map: React.FC = () => {
                     className="map">
                 </canvas>
             </div>
-            <Status 
-                visible={statusPanel}
-                setVisible={setStatusPanel} 
-                setActiveMap={setActiveMap} />
+            {statusPanel && (
+                <Status 
+                    visible={statusPanel}
+                    setVisible={setStatusPanel} 
+                    setActiveMap={setActiveMap}
+                />
+            )}
+            {/* <TextBox text={"こんにちは"} /> */}
         </>
     )
 }

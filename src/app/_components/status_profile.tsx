@@ -8,25 +8,18 @@ type StatusProps = {
 };
 
 const StatusProfile: React.FC<StatusProps> = ({visibleProfile, setVisibleProfile}) => {
-    const [activeProfile, setActiveProfile] = useState(false);
 
     const closePanel = () => {
         setVisibleProfile(false);
     }
 
     useEffect(() => {
-        setActiveProfile(true);
-
+        console.log(`mount Profile: ${visibleProfile}`)
         // ハンドルイベント
         const handleKeyDown = (event: KeyboardEvent) => {
-            if(activeProfile === false) {
-                return;
-            }
-
             switch (event.key) {
                 case 'Enter':
                     setVisibleProfile(false);
-                    setActiveProfile(false);
 
                     break;
                 default:
@@ -37,9 +30,8 @@ const StatusProfile: React.FC<StatusProps> = ({visibleProfile, setVisibleProfile
         document.addEventListener("keydown", handleKeyDown);
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
-            setActiveProfile(false)
         };
-    }, [activeProfile]);
+    }, []);
 
     return (
         <ul className="profile-list" style={{ display: visibleProfile ? "block" : "none" }}>
