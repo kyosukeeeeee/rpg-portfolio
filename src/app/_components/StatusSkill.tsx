@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import ProgressBar from "./ProgressBar";
+
 import "./style/status.scss";
 
 type StatusProps = {
@@ -10,6 +12,35 @@ type StatusProps = {
 const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => {
 
     const CATEGORY = ["フロントエンド", "バックエンド", "データベース", "その他"];
+    const FRONT = [
+        {skill: "HTML&CSS", value: 100},
+        {skill: "BootStrap", value: 60},
+        {skill: "SCSS", value: 60},
+        {skill: "JavaScript", value: 80},
+        {skill: "TypeScript", value: 60},
+        {skill: "React", value: 80},
+        {skill: "Node.js", value: 60},
+    ]
+    const BACK = [
+        {skill: "Java", value: 80},
+        {skill: "C#", value: 80},
+        {skill: "VB.NET", value: 60},
+        {skill: "PHP", value: 60},
+        {skill: "SpringBoot", value: 80},
+        {skill: "GoogleAppScript", value: 80},
+    ]
+    const DATABASE = [
+        {skill: "MySQL", value: 80},
+        {skill: "PostgreSQL", value: 80},
+        {skill: "SQL server", value: 80},
+        {skill: "RDS", value: 60},
+    ]
+    const OTHER = [
+        {skill: "AWS", value: 60},
+        {skill: "Node.js", value: 60},
+        {skill: "Linux", value: 60},
+        {skill: "WordPress", value: 100},
+    ]
     const [activeIndex, setActiveIndex] = useState(0);
     const [activeSkill, setActiveSkill] = useState(false);
 
@@ -65,40 +96,50 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
             </nav>
             {/* フロント */}
             <ul className={`skill-list ${activeIndex === 0 ? "show" : "hide"}`}>
-                <li className="item">HTML</li>
-                <li className="item">CSS</li>
-                <li className="item">JavaScript</li>
-                <li className="item">TypeScript</li>
-                <li className="item">React</li>
-                <li className="item">Next.js</li>
-                <li className="item">SCSS</li>
-                <li className="item">BootStrap</li>
+                {FRONT.map((item,index) => {
+                    return (
+                        <li key={index} className="item">
+                            {item.skill}
+                            <ProgressBar value={item.value} />
+                        </li>
+                    )
+                })}
                 <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* バックエンド */}
             <ul className={`skill-list ${activeIndex === 1 ? "show" : "hide"}`}>
-                <li className="item">Java</li>
-                <li className="item">C#</li>
-                <li className="item">VB.net</li>
-                <li className="item">PHP</li>
-                <li className="item">SpringBoot</li>
-                <li className="item">GoogleAppScript</li>
+                {BACK.map((item,index) => {
+                    return (
+                        <li key={index} className="item">
+                            {item.skill}
+                            <ProgressBar value={item.value} />
+                        </li>
+                    )
+                })}
                 <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* データベース */}
             <ul className={`skill-list ${activeIndex === 2 ? "show" : "hide"}`}>
-                <li className="item">MySQL</li>
-                <li className="item">PostgreSQL</li>
-                <li className="item">SQL server</li>
-                <li className="item">RDS</li>
+                {DATABASE.map((item,index) => {
+                    return (
+                        <li key={index} className="item">
+                            {item.skill}
+                            <ProgressBar value={item.value} />
+                        </li>
+                    )
+                })}
                 <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
             {/* その他 */}
             <ul className={`skill-list ${activeIndex === 3 ? "show" : "hide"}`}>
-                <li className="item">AWS</li>
-                <li className="item">Node.js</li>
-                <li className="item">Linux</li>
-                <li className="item">Word Press</li>
+                {OTHER.map((item,index) => {
+                    return (
+                        <li key={index} className="item">
+                            {item.skill}
+                            <ProgressBar value={item.value} />
+                        </li>
+                    )
+                })}
                 <p className="btn" onClick={closePanel}>Enterで閉じる</p>
             </ul>
         </div>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-import StatusProfile from "./status_profile";
-import StatusSkill from "./status_skill";
-import StatusQualification from "./status_qualification";
+import StatusProfile from "./StatusProfile";
+import StatusSkill from "./StatusSkill";
+import StatusQualification from "./StatusQualification";
 
 import "./style/status.scss";
 

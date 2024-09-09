@@ -1,7 +1,9 @@
-import Title from "./_components/title";
+"use client";
+
+import Title from "./_components/Title";
 
 export default function TestHome() {
   return (
-    <Title text={"click"} />
+    <Title text={"Click"} />
   );
 }

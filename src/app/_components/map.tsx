@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
-import Status from "./status";
-import TextBox from "./text_box";
+import Status from "./Status";
+import TextBox from "./TextBox";
 import "./style/home.scss"
 
 const Map: React.FC = () => {
@@ -37,8 +37,8 @@ const Map: React.FC = () => {
             const y = event.clientY - rect.top;
 
             // クリックされたマス目の位置を計算
-            const gridX = Math.floor(x / 32);
-            const gridY = Math.floor(y / 32);
+            const gridX = Math.floor(x / 48);
+            const gridY = Math.floor(y / 48);
 
             // クリックした場所が移動可能な位置ならユーザーの位置を更新
             if (viewMap[gridY][gridX] === 0) {
@@ -76,27 +76,27 @@ const Map: React.FC = () => {
             for (let y = 0; y < viewMap.length; y++) {
                 for (let x = 0; x < viewMap[y].length; x++) {
                     if (viewMap[y][x] === 1) {
-                        ctx.drawImage(wallImage, 0, 0, wallImage.width, wallImage.height, 32 * x, 32 * y, 32, 32);
+                        ctx.drawImage(wallImage, 0, 0, wallImage.width, wallImage.height, 48 * x, 48 * y, 48, 42);
                     } else {
-                        ctx.drawImage(floorImage, 0, 0, floorImage.width, floorImage.height, 32 * x, 32 * y, 32, 32);
+                        ctx.drawImage(floorImage, 0, 0, floorImage.width, floorImage.height, 48 * x, 48 * y, 48, 48);
                     }
                 }
             }
 
             // ユーザー描画
-            ctx.drawImage(userImage, 0, 0, userImage.width, userImage.height, 32 * userX, 32 * userY, 32, 32);
+            ctx.drawImage(userImage, 0, 0, userImage.width, userImage.height, 48 * userX, 48 * userY, 48, 48);
             // ベッド描画
-            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 32 * 5, 32 * 1, 32, 32);
+            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 48 * 5, 48 * 1, 48, 48);
             // 暖炉描画
-            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 32 * 3, 32 * 1, 32, 32);
+            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 48 * 3, 48 * 1, 48, 48);
             // 本棚描画
-            ctx.drawImage(shelfImage, 0, 0, shelfImage.width, shelfImage.height, 32 * 1, 32 * 1, 32, 32);
+            ctx.drawImage(shelfImage, 0, 0, shelfImage.width, shelfImage.height, 48 * 1, 48 * 1, 48, 48);
             // テーブル描画
-            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 32 * 3, 32 * 3, 32, 32);
+            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 48 * 3, 48 * 3, 48, 48);
             // ゲスト描画
-            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 32 * 4, 32 * 3, 32, 32);
+            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 48 * 4, 48 * 3, 48, 48);
             // ドア描画
-            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 32 * 3, 32 * 6, 32, 32);
+            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 48 * 3, 48 * 6, 48, 48);
         };
 
         const onImageLoad = () => {
@@ -203,8 +203,8 @@ const Map: React.FC = () => {
             <div className="map-wrapper">
                 <canvas
                     ref={canvasRef}
-                    width={224}
-                    height={224}
+                    width={336}
+                    height={336}
                     className="map">
                 </canvas>
             </div>

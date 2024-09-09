@@ -1,0 +1,14 @@
+.bar-wrapper {
+    width: 60%;
+
+    display: flex;
+    flex-direction: column;
+    
+    .param {
+        display: flex;
+        justify-content: space-between;
+    }
+    .meter {
+        width: 100%;
+    }
+}
