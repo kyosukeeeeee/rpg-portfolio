@@ -67,6 +67,21 @@ const StatusSkill: React.FC<StatusProps> = ({visibleSkill, setVisibleSkill}) => 
                     setActiveSkill(false);
 
                     break;
+
+                // case 'ArrowRight':
+                //     if(activeIndex < 3) {
+                //         setActiveIndex(prev => prev + 1);
+                //     }
+
+                //     break;
+                
+                // case 'ArrowLeft':
+                //     if(activeIndex > 0) {
+                //         setActiveIndex(prev => prev - 1);
+                //     }
+
+                //     break;
+
                 default:
                     break;
             }

@@ -22,6 +22,27 @@ const Map: React.FC = () => {
     const [activeMap, setActiveMap] = useState(true);
     const [textContent, setTextContent] = useState("");
 
+    const [drawPngX, setDrawPngX] = useState(0);
+    const [drawPngY, setDrawPngY] = useState(0);
+
+    // const drawPngMove = () => {
+    //     if(drawPngX === 0) {
+    //         setDrawPngX(32);
+    //     } else if (drawPngX === 32) {
+    //         setDrawPngX(64);
+    //     } else {
+    //         setDrawPngX(0);
+    //     }
+    // }
+
+    // useEffect(() => {
+
+    //     setInterval(drawPngMove, 1000);
+
+    //     return () => clearInterval(flgMove);
+
+    // }, [drawPngX])
+
     useEffect(() => {
         if (!canvasRef.current) {
             throw new Error("canvas要素の取得に失敗しました。");
@@ -37,8 +58,8 @@ const Map: React.FC = () => {
             const y = event.clientY - rect.top;
 
             // クリックされたマス目の位置を計算
-            const gridX = Math.floor(x / 48);
-            const gridY = Math.floor(y / 48);
+            const gridX = Math.floor(x / 32);
+            const gridY = Math.floor(y / 32);
 
             // クリックした場所が移動可能な位置ならユーザーの位置を更新
             if (viewMap[gridY][gridX] === 0) {
@@ -76,27 +97,27 @@ const Map: React.FC = () => {
             for (let y = 0; y < viewMap.length; y++) {
                 for (let x = 0; x < viewMap[y].length; x++) {
                     if (viewMap[y][x] === 1) {
-                        ctx.drawImage(wallImage, 0, 0, wallImage.width, wallImage.height, 48 * x, 48 * y, 48, 42);
+                        ctx.drawImage(wallImage, 0, 0, wallImage.width, wallImage.height, 32 * x, 32 * y, 32, 32);
                     } else {
-                        ctx.drawImage(floorImage, 0, 0, floorImage.width, floorImage.height, 48 * x, 48 * y, 48, 48);
+                        ctx.drawImage(floorImage, 0, 0, floorImage.width, floorImage.height, 32 * x, 32 * y, 32, 32);
                     }
                 }
             }
 
             // ユーザー描画
-            ctx.drawImage(userImage, 0, 0, userImage.width, userImage.height, 48 * userX, 48 * userY, 48, 48);
+            ctx.drawImage(userImage, drawPngX, drawPngY, 32, 32, 32 * userX, 32 * userY, 32, 32);
             // ベッド描画
-            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 48 * 5, 48 * 1, 48, 48);
+            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 32 * 5, 32 * 1, 32, 32);
             // 暖炉描画
-            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 48 * 3, 48 * 1, 48, 48);
+            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 32 * 3, 32 * 1, 32, 32);
             // 本棚描画
-            ctx.drawImage(shelfImage, 0, 0, shelfImage.width, shelfImage.height, 48 * 1, 48 * 1, 48, 48);
+            ctx.drawImage(shelfImage, 0, 0, shelfImage.width, shelfImage.height, 32 * 1, 32 * 1, 32, 32);
             // テーブル描画
-            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 48 * 3, 48 * 3, 48, 48);
+            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 32 * 3, 32 * 3, 32, 32);
             // ゲスト描画
-            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 48 * 4, 48 * 3, 48, 48);
+            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 32 * 4, 32 * 3, 32, 32);
             // ドア描画
-            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 48 * 3, 48 * 6, 48, 48);
+            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 32 * 3, 32 * 6, 32, 32);
         };
 
         const onImageLoad = () => {
@@ -116,9 +137,10 @@ const Map: React.FC = () => {
         guestImage.onload = onImageLoad;
         doorImage.onload = onImageLoad;
 
-        wallImage.src = "/images/wall02.svg";
+        wallImage.src = "/images/wall01.svg";
         floorImage.src = "/images/floor.svg";
-        userImage.src = "/images/user.svg";
+        // userImage.src = "/images/user.svg";
+        userImage.src = "/images/user.png";
         bedImage.src = "/images/bed.svg";
         danroImage.src = "/images/danro.svg";
         shelfImage.src = "/images/shelf.svg";
@@ -139,26 +161,31 @@ const Map: React.FC = () => {
     };
 
     useEffect(() => {
+
         const handleKeyDown = (event: KeyboardEvent) => {
             if (activeMap === false) return;
 
             switch (event.key) {
                 case 'ArrowUp':
+                    setDrawPngY(96);
                     if (moveRestrict(0, -1)) {
                         setUserXY(prev => ({ ...prev, userY: prev.userY - 1 }));
                     }
                     break;
                 case 'ArrowDown':
+                    setDrawPngY(0);
                     if (moveRestrict(0, 1)) {
                         setUserXY(prev => ({ ...prev, userY: prev.userY + 1 }));
                     }
                     break;
                 case 'ArrowLeft':
+                    setDrawPngY(32);
                     if (moveRestrict(-1, 0)) {
                         setUserXY(prev => ({ ...prev, userX: prev.userX - 1 }));
                     }
                     break;
                 case 'ArrowRight':
+                    setDrawPngY(64);
                     if (moveRestrict(1, 0)) {
                         setUserXY(prev => ({ ...prev, userX: prev.userX + 1 }));
                     }
@@ -196,6 +223,7 @@ const Map: React.FC = () => {
             document.removeEventListener('keydown', handleKeyDown);
             setActiveMap(false);
         };
+
     }, [userX, userY, activeMap]);
 
     return (
@@ -203,8 +231,8 @@ const Map: React.FC = () => {
             <div className="map-wrapper">
                 <canvas
                     ref={canvasRef}
-                    width={336}
-                    height={336}
+                    width={224}
+                    height={224}
                     className="map">
                 </canvas>
             </div>
