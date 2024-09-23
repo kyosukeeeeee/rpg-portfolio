@@ -1,0 +1,29 @@
+.header-wrapper
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    padding: 20px 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+    .header-nav
+    {
+        width: 30%;
+        display: flex;
+        justify-content: space-between;
+        .item
+        {
+            a
+            {
+                color: #FFF;
+                text-decoration: none;
+            }
+        }
+    }
+}
