@@ -24,12 +24,3 @@
   src: url('../../public/fonts/PixelMplus12-Bold.ttf') format('truetype');
   font-weight: bold;
 }
-
-@font-face {
-  font-family: 'BestTen-CRT';
-  src: url('../../public/fonts/BestTen-CRT.otf') format('opentype');
-}
-@font-face {
-  font-family: 'BestTen-DOT';
-  src: url('../../public/fonts/BestTen-DOT.otf') format('opentype');
-}

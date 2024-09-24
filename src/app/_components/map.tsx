@@ -6,6 +6,8 @@ import "./style/home.scss"
 
 const Map: React.FC = () => {
 
+    const moveSoundRef = useRef<HTMLAudioElement | null>(null);
+
     const viewMap = [
         [1, 1, 1, 1, 1, 1, 1],
         [1, 4, 0, 3, 0, 2, 1],
@@ -24,24 +26,6 @@ const Map: React.FC = () => {
 
     const [drawPngX, setDrawPngX] = useState(0);
     const [drawPngY, setDrawPngY] = useState(0);
-
-    // const drawPngMove = () => {
-    //     if(drawPngX === 0) {
-    //         setDrawPngX(32);
-    //     } else if (drawPngX === 32) {
-    //         setDrawPngX(64);
-    //     } else {
-    //         setDrawPngX(0);
-    //     }
-    // }
-
-    // useEffect(() => {
-
-    //     setInterval(drawPngMove, 1000);
-
-    //     return () => clearInterval(flgMove);
-
-    // }, [drawPngX])
 
     useEffect(() => {
         if (!canvasRef.current) {
@@ -105,7 +89,7 @@ const Map: React.FC = () => {
             }
 
             // ユーザー描画
-            ctx.drawImage(userImage, drawPngX, drawPngY, 32, 32, 32 * userX, 32 * userY, 32, 32);
+            ctx.drawImage(userImage, 0, 0, userImage.width, userImage.height, 32 * userX, 32 * userY, 32, 32);
             // ベッド描画
             ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 32 * 5, 32 * 1, 32, 32);
             // 暖炉描画
@@ -139,8 +123,8 @@ const Map: React.FC = () => {
 
         wallImage.src = "/images/wall01.svg";
         floorImage.src = "/images/floor.svg";
-        // userImage.src = "/images/user.svg";
-        userImage.src = "/images/user.png";
+        userImage.src = "/images/user.svg";
+        //userImage.src = "/images/user.png";
         bedImage.src = "/images/bed.svg";
         danroImage.src = "/images/danro.svg";
         shelfImage.src = "/images/shelf.svg";
@@ -162,32 +146,40 @@ const Map: React.FC = () => {
 
     useEffect(() => {
 
+        const sound = new Audio("/audio/no_walk.ogg");
+        sound.volume = 0.4;
+        moveSoundRef.current = sound;
+
         const handleKeyDown = (event: KeyboardEvent) => {
             if (activeMap === false) return;
 
             switch (event.key) {
                 case 'ArrowUp':
-                    setDrawPngY(96);
                     if (moveRestrict(0, -1)) {
                         setUserXY(prev => ({ ...prev, userY: prev.userY - 1 }));
+                    } else {
+                        moveSound();
                     }
                     break;
                 case 'ArrowDown':
-                    setDrawPngY(0);
                     if (moveRestrict(0, 1)) {
                         setUserXY(prev => ({ ...prev, userY: prev.userY + 1 }));
+                    } else {
+                        moveSound();
                     }
                     break;
                 case 'ArrowLeft':
-                    setDrawPngY(32);
                     if (moveRestrict(-1, 0)) {
                         setUserXY(prev => ({ ...prev, userX: prev.userX - 1 }));
+                    } else {
+                        moveSound();
                     }
                     break;
                 case 'ArrowRight':
-                    setDrawPngY(64);
                     if (moveRestrict(1, 0)) {
                         setUserXY(prev => ({ ...prev, userX: prev.userX + 1 }));
+                    } else {
+                        moveSound();
                     }
                     break;
                 case 'Tab':
@@ -197,9 +189,9 @@ const Map: React.FC = () => {
                     break;
                 case 'Enter':
                     if ((userX === 4 && userY === 4) || (userX === 4 && userY === 2) || (userX === 5 && userY === 3)) {
-                        setTextContent("こんにちは！ここは高田 恭佑のポートフォリオです！");
+                        setTextContent("こんにちは！ここはタカダ キョウスケのポートフォリオです！");
                     } else if ((userX === 1 && userY === 2)) {
-                        setTextContent("本棚には読んでいない技術書がたくさんある。。");
+                        setTextContent("本棚には読んでいない技術書がたくさんある。");
                     } else if ((userX === 3 && userY === 2)) {
                         setTextContent("暖炉だ。");
                     } else if ((userX === 5 && userY === 2)) {
@@ -222,9 +214,24 @@ const Map: React.FC = () => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
             setActiveMap(false);
+
+            if (moveSoundRef.current) {
+                moveSoundRef.current.pause();
+                moveSoundRef.current = null;
+            }
         };
 
     }, [userX, userY, activeMap]);
+
+    const moveSound = () => {
+        if (moveSoundRef.current) {
+            // 再生中でも最初から再生するように設定
+            moveSoundRef.current.currentTime = 0;
+            moveSoundRef.current.play().catch(error => {
+                console.error('音声の再生エラー:', error);
+            });
+        }
+    }
 
     return (
         <>

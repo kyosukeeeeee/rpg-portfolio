@@ -2,6 +2,7 @@
 
 import Header from "../_components/Header";
 import Map from "../_components/Map";
+import Instructions from "../_components/Instructions"
 
 const Home: React.FC = () => {
 
@@ -9,6 +10,7 @@ const Home: React.FC = () => {
         <>
             <Header />
             <Map />
+            <Instructions />
         </>
     )
 }
