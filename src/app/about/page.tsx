@@ -2,6 +2,9 @@
 
 import React, { useEffect } from "react";
 import Header from "../_components/Header";
+import Character from "../_components/Character";
+import { Typewriter } from 'react-simple-typewriter';
+
 import "../_components/style/about.scss";
 
 const About: React.FC = () => {
@@ -10,7 +13,7 @@ const About: React.FC = () => {
             // スクロール量を取得
             const scroll = window.scrollY;
             // 画面の高さを取得
-            const windowHeight = window.innerHeight;
+            const windowHeight = window.innerHeight - 300;
             // すべての.boxを取得
             const boxes = document.querySelectorAll('.about-item');
             
@@ -36,19 +39,31 @@ const About: React.FC = () => {
         <>
             <Header />
             <div className="about-wrapper">
+                <h2 className="page-title">
+                    <Typewriter
+                        words={["About me..."]}
+                        loop={1}
+                        cursor
+                        cursorStyle='_'
+                        typeSpeed={120}
+                        deleteSpeed={100}
+                        delaySpeed={1000}
+                    />
+                </h2>
                 {/* 自己紹介・生い立ち */}
                 <div className="about-item">
-                    <h2 className="title">自己紹介・生い立ち</h2>
+                    <h3 className="title">自己紹介・生い立ち</h3>
                     <p className="content">
                         はじめまして。タカダ キョウスケと申します。<br />
                         自身は高校卒業後、機械設計の仕事を7年程経験しました。<br />
                         当時コロナウイルスが流行ったのがきっかけで、<br />
                         働き方を変えたいと思い独学でプログラミングの勉強を始めました。
                     </p>
+                    <Character num={1} />
                 </div>
                 {/* 職歴1 */}
                 <div className="about-item">
-                    <h2 className="title">Ⅰ. Web制作</h2>
+                    <h3 className="title">Ⅰ. Web制作</h3>
                     <p>2021.01 ~ 2023.03</p>
                     <p className="content">
                         WordPressを用いた社内サイトの運用・作成をしていました。<br />
@@ -58,17 +73,33 @@ const About: React.FC = () => {
                     <div className="skill-set">
                         <p className="skill-title">主な使用技術</p>
                         <ul className="skill-wrapper">
-                            <li className="skill-item">WordPress</li>
-                            <li className="skill-item">jQuery</li>
-                            <li className="skill-item">HTML</li>
-                            <li className="skill-item">CSS</li>
-                            <li className="skill-item">Adobe製品</li>
+                            <li className="skill-item">
+                                <span>WordPress</span>
+                                テーマ制作から可能です。メインクエリ・サブクエリの理解もしています。
+                            </li>
+                            <li className="skill-item">
+                                <span>jQuery</span>
+                                モダンな動きの実装ができます。
+                            </li>
+                            <li className="skill-item">
+                                <span>HTML</span>
+                                タグの意味を理解し、適切に扱えます。
+                            </li>
+                            <li className="skill-item">
+                                <span>CSS</span>
+                                レスポンシブデザインも実装可能です。
+                            </li>
+                            <li className="skill-item">
+                                <span>Adobe製品</span>
+                                フォトショ、イラレ、XDなど基本的な操作はできます。
+                            </li>
                         </ul>
                     </div>
+                    <Character num={2} />
                 </div>
                 {/* 職歴2 */}
                 <div className="about-item">
-                    <h2 className="title">Ⅱ. Webエンジニア</h2>
+                    <h3 className="title">Ⅱ. Webエンジニア</h3>
                     <p>2023.04 ~ </p>
                     <p className="content">
                         自社内で使用する簡単なWebシステムやチャットポッドを作成から始まり、<br />
@@ -78,16 +109,33 @@ const About: React.FC = () => {
                     <div className="skill-set">
                         <p className="skill-title">主な使用技術</p>
                         <ul className="skill-wrapper">
-                            <li className="skill-item">SpringBoot</li>
-                            <li className="skill-item">C#</li>
-                            <li className="skill-item">MySQL</li>
-                            <li className="skill-item">PostgreSQL</li>
-                            <li className="skill-item">Dify</li>
-                            <li className="skill-item">AWS</li>
-                            <li className="skill-item">Git</li>
-                            <li className="skill-item">SVN</li>
+                            <li className="skill-item">
+                                <span>SpringBoot</span>
+                                MVCモデル・DIを理解しアプリケーションの実装ができます。
+                            </li>
+                            <li className="skill-item">
+                                <span>C#</span>
+                                一般的なアプリケーションを実装できます。
+                            </li>
+                            <li className="skill-item">
+                                <span>MySQL/PostgreSQL</span>
+                                RDBを扱えます。ウインド関数まで使用できます。
+                            </li>
+                            <li className="skill-item">
+                                <span>Dify</span>
+                                MessageAPIと組み合わせてBotの作成を経験しました。
+                            </li>
+                            <li className="skill-item">
+                                <span>AWS</span>
+                                一般的なベストプラクティスを提案できます。
+                            </li>
+                            <li className="skill-item">
+                                <span>Git/SVN</span>
+                                チーム開発ができます。Gitフローの理解があります。
+                            </li>
                         </ul>
                     </div>
+                    <Character num={3} />
                 </div>
             </div>
         </>

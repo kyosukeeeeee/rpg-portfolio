@@ -9,17 +9,19 @@ const Map: React.FC = () => {
     const moveSoundRef = useRef<HTMLAudioElement | null>(null);
 
     const viewMap = [
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 4, 0, 3, 0, 2, 1],
-        [1, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 5, 6, 0, 1],
-        [1, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 7, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 4, 0, 0, 3, 0, 0, 2, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 5, 6, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 7, 1, 1, 1, 1],
     ];
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const [{userX, userY}, setUserXY] = useState({ userX: 2, userY: 3 });
+    const [{userX, userY}, setUserXY] = useState({ userX: 3, userY: 4 });
     const [statusPanel, setStatusPanel] = useState(false);
     const [activeMap, setActiveMap] = useState(true);
     const [textContent, setTextContent] = useState("");
@@ -91,17 +93,17 @@ const Map: React.FC = () => {
             // ユーザー描画
             ctx.drawImage(userImage, 0, 0, userImage.width, userImage.height, 32 * userX, 32 * userY, 32, 32);
             // ベッド描画
-            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 32 * 5, 32 * 1, 32, 32);
+            ctx.drawImage(bedImage, 0, 0, bedImage.width, bedImage.height, 32 * 7, 32 * 1, 32, 32);
             // 暖炉描画
-            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 32 * 3, 32 * 1, 32, 32);
+            ctx.drawImage(danroImage, 0, 0, danroImage.width, danroImage.height, 32 * 4, 32 * 1, 32, 32);
             // 本棚描画
             ctx.drawImage(shelfImage, 0, 0, shelfImage.width, shelfImage.height, 32 * 1, 32 * 1, 32, 32);
             // テーブル描画
-            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 32 * 3, 32 * 3, 32, 32);
+            ctx.drawImage(tableImage, 0, 0, tableImage.width, tableImage.height, 32 * 4, 32 * 4, 32, 32);
             // ゲスト描画
-            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 32 * 4, 32 * 3, 32, 32);
+            ctx.drawImage(guestImage, 0, 0, guestImage.width, guestImage.height, 32 * 5, 32 * 4, 32, 32);
             // ドア描画
-            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 32 * 3, 32 * 6, 32, 32);
+            ctx.drawImage(doorImage, 0, 0, doorImage.width, doorImage.height, 32 * 4, 32 * 8, 32, 32);
         };
 
         const onImageLoad = () => {
@@ -124,7 +126,6 @@ const Map: React.FC = () => {
         wallImage.src = "/images/wall01.svg";
         floorImage.src = "/images/floor.svg";
         userImage.src = "/images/user.svg";
-        //userImage.src = "/images/user.png";
         bedImage.src = "/images/bed.svg";
         danroImage.src = "/images/danro.svg";
         shelfImage.src = "/images/shelf.svg";
@@ -188,15 +189,15 @@ const Map: React.FC = () => {
                     setActiveMap(false);
                     break;
                 case 'Enter':
-                    if ((userX === 4 && userY === 4) || (userX === 4 && userY === 2) || (userX === 5 && userY === 3)) {
+                    if ((userX === 5 && userY === 5) || (userX === 6 && userY === 4) || (userX === 5 && userY === 3)) {
                         setTextContent("こんにちは！ここはタカダ キョウスケのポートフォリオです！");
                     } else if ((userX === 1 && userY === 2)) {
                         setTextContent("本棚には読んでいない技術書がたくさんある。");
-                    } else if ((userX === 3 && userY === 2)) {
+                    } else if ((userX === 4 && userY === 2)) {
                         setTextContent("暖炉だ。");
-                    } else if ((userX === 5 && userY === 2)) {
+                    } else if ((userX === 7 && userY === 2)) {
                         setTextContent("ふかふかのベッドだ。");
-                    } else if ((userX === 3 && userY === 5)) {
+                    } else if ((userX === 4 && userY === 7)) {
                         setTextContent("鍵がかかっている。");
                     }
                     break;
@@ -238,8 +239,8 @@ const Map: React.FC = () => {
             <div className="map-wrapper">
                 <canvas
                     ref={canvasRef}
-                    width={224}
-                    height={224}
+                    width={288}
+                    height={288}
                     className="map">
                 </canvas>
             </div>

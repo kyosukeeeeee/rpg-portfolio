@@ -12,6 +12,7 @@
 
     width: auto;
     height: auto;
+    z-index: 9999;
 
     .status-item {
         color: #FFF;
@@ -44,6 +45,7 @@
 
     width: auto;
     height: auto;
+    z-index: 9999;
     .item {
         color: #FFF;
         font-family: "PixelMplus-12R", sans-serif;
@@ -72,6 +74,7 @@
 
     width: auto;
     height: auto;
+    z-index: 9999;
     .skill-navi {
         display: flex;
         flex-direction: row;
@@ -131,6 +134,7 @@
 
     width: auto;
     height: auto;
+    z-index: 9999;
     .item {
         color: #FFF;
         font-family: "PixelMplus-12R", sans-serif;
