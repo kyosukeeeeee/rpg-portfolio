@@ -1,0 +1,24 @@
+.product-item {
+    width: 30%;
+    text-align: center;
+    background: #444;
+    position: relative;
+    overflow: hidden;
+
+    .title {
+        position: absolute;
+        color: #FFF;
+        top: 5%;
+        left: 5%;
+        font-weight: bold;
+        font-size: 2em;
+        font-family: Quicksand, sans-serif;
+    }
+    .image {
+        width: 100%;
+        transition: transform .6s ease;
+    }
+    .image:hover {
+        transform: scale(1.1); /* 拡大 */
+    }
+}

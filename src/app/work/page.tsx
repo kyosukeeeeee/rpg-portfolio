@@ -10,9 +10,7 @@ const Work: React.FC = () => {
         <>
             <Header />
             <div className="work-wrapper">
-                <Product />
-                <Product />
-                <Product />
+                <Product title={"ポートフォリオ"} num={1} />
             </div>
         </>
     )
